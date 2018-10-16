@@ -1,0 +1,48 @@
+        AND	R2, R1, #0x1		
+    	  MOV	R0, R2, LSL #2		;put d0 in the correct position
+    		
+    		AND	R2, R1, #0xE		
+    		ORR	R0, R0, R2, LSL #3	;put d1-d3 in the correct position
+    		
+    		AND	R2, R1, #0xF0		
+    		ORR	R0, R0, R2, LSL #4	;put d4-d7 in the correct position
+    		
+    		EOR	R2, R0, R0, LSR #2	
+    		EOR	R2, R2, R0, LSR #4
+    		EOR     R2, R2, R0, LSR #6
+    		EOR     R2, R2, R0, LSR #8
+    		EOR	R2, R2, R0, LSR #10	;EOR to see whether it is odd or even
+    		
+    		AND	R2, R2, #0x1		;only keep the c0 check bit
+    		ORR	R0, R0, R2		;put the c0
+    		
+    		EOR	R2, R0, R0, LSR #1	
+    		EOR	R2, R2, R0, LSR #4	
+    		EOR	R2, R2, R0, LSR #5
+    		EOR     R2, R2, R0, LSR #8
+    		
+    		
+    		AND	R2, R2, #0x2		; Clear all but check bit c1
+    		ORR	R0, R0, R2		
+    		
+    		EOR	R2, R0, R0, LSR #1	
+    		EOR	R2, R2, R0, LSR #2
+    		EOR     R2, R2, R0, LSR #3
+    		EOR	R2, R2, R0, LSR #8	
+    		
+    		AND	R2, R2, #0x8		;put the bit c2 in bit3
+    		ORR	R0, R0, R2			
+    		
+    		
+    		EOR	R2, R0, R0, LSR #1	
+    		EOR	R2, R2, R0, LSR #2
+    		EOR     R2, R2, R0, LSR #3	
+    		EOR	R2, R2, R0, LSR #4	
+    		
+    		AND	R2, R2, #0x80		;put the bit c3 in bit7
+    		ORR	R0, R0, R2	
+    	
+    	; -------------- end cut --------------------------
+    	
+    	stop	B	stop
+    END
